@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Models\Category;
+use App\Models\Type;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $types = Type::get();
+    $categories = Category::get();
+
+    return view('welcome', compact('types', 'categories'));
 });
+Route::resource('/monefy', DashboardController::class);

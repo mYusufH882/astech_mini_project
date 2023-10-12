@@ -13,6 +13,8 @@
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <!-- JS Chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Bootstrap Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js">
     </script>
@@ -29,7 +31,7 @@
 </head>
 
 <body style="background-image: url('{{asset('assets/images/dollar_pngtree.jpg')}}');">
-
+    @include('sweetalert::alert')
 
     <div class="container-fluid">
         @yield('content')

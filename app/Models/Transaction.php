@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_type
  * @property int $id_category
  * @property int $amount
- * @property string $income_date
- * @property string $expense_date
+ * @property string $transaction_date
  * @property string $created_at
  * @property string $updated_at
  */
@@ -33,5 +32,15 @@ class Transaction extends Model
     /**
      * @var array
      */
-    protected $fillable = ['id_type', 'id_category', 'amount', 'income_date', 'expense_date', 'created_at', 'updated_at'];
+    protected $fillable = ['id_type', 'id_category', 'amount', 'transaction_date', 'created_at', 'updated_at'];
+
+    public function typeItem()
+    {
+        return $this->belongsTo(Type::class, 'id_type', 'id');
+    }
+
+    public function categoryItem()
+    {
+        return $this->belongsTo(Category::class, 'id_category', 'id');
+    }
 }

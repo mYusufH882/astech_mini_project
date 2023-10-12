@@ -22,4 +22,9 @@ Route::get('/', function () {
 
     return view('welcome', compact('types', 'categories'));
 });
-Route::resource('/monefy', DashboardController::class);
+Route::resource('/dashboard', DashboardController::class);
+
+Route::get('/categories/{id}', function ($id) {
+    $categories = Category::where('id_type', $id)->get();
+    return response()->json($categories);
+});

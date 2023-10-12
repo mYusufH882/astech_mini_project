@@ -18,8 +18,7 @@ class CreateTransactionTable extends Migration
             $table->unsignedInteger('id_type');
             $table->unsignedInteger('id_category');
             $table->integer('amount');
-            $table->date('income_date')->nullable();
-            $table->date('expense_date')->nullable();
+            $table->date('transaction_date')->nullable();
             $table->timestamps();
         });
     }

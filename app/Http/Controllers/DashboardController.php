@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Transaction;
+use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -13,12 +14,17 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $types = Type::get();
-        $categories = Category::get();
+        if ($request->ajax()) {
+            $transactions = Transaction::with(['typeItem', 'categoryItem'])->get();
 
-        return view('welcome', compact('types', 'categories'));
+            return response()->json($transactions);
+        }
+
+        $types = Type::get();
+
+        return view('welcome', compact('types'));
     }
 
     /**
@@ -39,7 +45,17 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'id_type' => $request->type_id,
+            'id_category' => $request->category_id,
+            'amount' => $request->amount,
+            'transaction_date' => $request->transaction_date
+        ];
+
+        Transaction::create($data);
+        Alert::success('success', 'Transaction was successfully created.');
+
+        return redirect()->back();
     }
 
     /**

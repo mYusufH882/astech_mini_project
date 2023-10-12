@@ -16,10 +16,17 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
+        $transaction = new Transaction();
         if ($request->ajax()) {
-            $transactions = Transaction::with(['typeItem', 'categoryItem'])->get();
+            $trans = $transaction->with(['typeItem', 'categoryItem'])->orderBy('created_at', 'DESC')->get();
 
-            return response()->json($transactions);
+            $data = [
+                'trans' => $trans,
+                'countIncome' => $transaction->getTotal(1),
+                'countExpense' => $transaction->getTotal(2),
+            ];
+
+            return response()->json($data);
         }
 
         $types = Type::get();
@@ -66,7 +73,6 @@ class DashboardController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -100,6 +106,12 @@ class DashboardController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $transactions = Transaction::find($id);
+        $transactions->delete();
+
+        if ($transactions) {
+            Alert::success('success', 'Item deleted successfully');
+        }
+        return response()->json(['message' => 'Item deleted successfully']);
     }
 }

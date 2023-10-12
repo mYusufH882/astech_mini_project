@@ -8,7 +8,7 @@
                 <h3 class="card-title">Income</h3>
             </div>
             <div class="card-body">
-                <h4 class="card-title">&dollar; 0</h4>
+                <h4 class="card-title">&dollar; <span id="totalIncome"></span></h4>
                 <canvas id="chartIncome" class="w-10"></canvas>
                 <script>
                     $(document).ready(function() {
@@ -21,7 +21,7 @@
                                 'Yellow'
                             ],
                             datasets: [{
-                                label: 'My First Dataset',
+                                label: 'Total',
                                 data: [300, 50, 100],
                                 backgroundColor: [
                                 'rgb(255, 99, 132)',
@@ -49,7 +49,7 @@
                 <span class="card-title">Track your income and expense</span>
             </div>
             <div class="card-body">
-                <h4 class="text-center">Total Balance &dollar; 0</h4>
+                <h4 class="text-center">Total Balance &dollar; <span id="totalBalance"></span></h4>
                 <hr>
 
                 <form action="{{route('dashboard.store')}}" class="form-group" method="POST">
@@ -129,13 +129,18 @@
                                     method: "GET",
                                     dataType: "json",
                                     success: function(data) {
-                                        data.forEach(item => {
+                                        var tB = data.countIncome - data.countExpense;
+                                        $("#totalIncome").text(data.countIncome);
+                                        $("#totalExpense").text(data.countExpense);
+                                        $("#totalBalance").text(tB);
+
+                                        data.trans.forEach(item => {
                                             var category = item.category_item;
                                             var type = item.type_item;
 
                                             var icon = type.id == 1 ? 'money-recive.svg' : 'money-send.svg';
                                             var card = `
-                                                <div class="card border-light mb-3" style="max-width: 540px;">
+                                                <div class="card border-light" style="max-width: 540px;">
                                                     <div class="row g-0">
                                                         <div class="col-md-2">
                                                             <div class="card-body">
@@ -155,7 +160,7 @@
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="card-body">
-                                                                <a href="#">
+                                                                <a href="#" data-id="`+item.id+`" class="delete-confirm">
                                                                     <i class="fa fa-trash fa-lg mt-4 text-danger"></i>    
                                                                 </a>    
                                                             </div>
@@ -164,15 +169,33 @@
                                                 </div>
                                             `;
 
-                                            $("#item").append(card);
+                                            $("#itemCard").append(card);
+                                        });
+
+                                        $(".delete-confirm").on('click', function() {
+                                            var typeId = $(this).data('id');
+                                            $.ajax({
+                                                type: "POST",
+                                                url: '/dashboard/'+typeId,
+                                                data : {
+                                                    "_token": "{{ csrf_token() }}",
+                                                    "_method": "DELETE"
+                                                },
+                                                success: function(data) {
+                                                    window.location.reload();
+                                                },
+                                                error: function(err) {
+                                                    alert(err);
+                                                }
+
+                                            });
                                         });
                                     }
                                 });
                             });
                         </script>
 
-                        <div id="item"></div>
-
+                        <div id="itemCard"></div>
                     </div>
                 </div>
             </div>
@@ -185,7 +208,7 @@
                 <h3 class="card-title">Expense</h3>
             </div>
             <div class="card-body">
-                <h4 class="card-title">&dollar; 0</h4>
+                <h4 class="card-title">&dollar; <span id="totalExpense"></span></h4>
                 <canvas id="chartExpense"></canvas>
                 <script>
                     $(document).ready(function() {
@@ -198,7 +221,7 @@
                                 'Yellow'
                             ],
                             datasets: [{
-                                label: 'My First Dataset',
+                                label: 'Total',
                                 data: [300, 50, 100],
                                 backgroundColor: [
                                 'rgb(255, 99, 132)',

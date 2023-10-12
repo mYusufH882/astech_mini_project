@@ -15,6 +15,8 @@ class CreateCategoryItemTable extends Migration
     {
         Schema::create('category_item', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('id_type');
+            $table->string('category_name');
             $table->timestamps();
         });
     }

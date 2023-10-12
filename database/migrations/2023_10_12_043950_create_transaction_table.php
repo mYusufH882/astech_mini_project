@@ -15,6 +15,11 @@ class CreateTransactionTable extends Migration
     {
         Schema::create('transaction', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('id_type');
+            $table->unsignedInteger('id_category');
+            $table->integer('amount');
+            $table->date('income_date')->nullable();
+            $table->date('expense_date')->nullable();
             $table->timestamps();
         });
     }

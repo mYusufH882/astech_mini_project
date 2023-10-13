@@ -40,7 +40,7 @@ $(document).ready(function () {
 
                 data.chartEx.forEach(item => {
                     var category = item.category_item;
-                    console.log(category)
+
                     labels.push(category.category_name);
                     datas.push(item.amount);
                     colorCharts.push(getRandomColor());

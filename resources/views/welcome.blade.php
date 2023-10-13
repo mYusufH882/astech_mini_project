@@ -10,35 +10,8 @@
             <div class="card-body">
                 <h4 class="card-title">&dollar; <span id="totalIncome"></span></h4>
                 <canvas id="chartIncome" class="w-10"></canvas>
-                <script>
-                    $(document).ready(function() {
-                        const ctx1 = $('#chartIncome');
-                        
-                        const data = {
-                            labels: [
-                                'Red',
-                                'Blue',
-                                'Yellow'
-                            ],
-                            datasets: [{
-                                label: 'Total',
-                                data: [300, 50, 100],
-                                backgroundColor: [
-                                'rgb(255, 99, 132)',
-                                'rgb(54, 162, 235)',
-                                'rgb(255, 205, 86)'
-                                ],
-                                hoverOffset: 4
-                            }]
-                        };
-
-                        new Chart(ctx1, {
-                            type: 'doughnut',
-                            data: data,
-                        });
-                    });
-                </script>
             </div>
+            <div class="card-footer bg-success"></div>
         </div>
     </div>
 
@@ -70,38 +43,8 @@
                             <select name="category_id" id="category" class="form-control" required>
                             </select>
                         </div>
-                        <script>
-                            $(document).ready(function() {
-                                var chooseType = $("#type");
-                                
-                                chooseType.on('change', function() {
-                                    var typeId = $(this).val();
-                                    if(typeId) {
-                                        $.ajax({
-                                            url: '/categories/'+typeId,
-                                            type: "GET",
-                                            data : {"_token":"{{ csrf_token() }}"},
-                                            dataType: "json",
-                                            success: function(data) {
-                                                if(data) {
-                                                    $("#category").empty();
-                                                    // $("#category").append("<option hidden>Choose Categories</option>");
-                                                    $.each(data, function(key, category) {
-                                                        $("select[name='category_id']").append("<option value="+category.id+">"+category.category_name+"</option>");
-                                                    });
-                                                } else {
-                                                    $("#category").empty();
-                                                }
-                                            }
-                                        });
-                                    } else {
-                                        $("#category").empty();
-                                    } 
-                                });
-                            });
-                        </script>
                     </div>
-                    <div class="row">
+                    <div class="row mt-2">
                         <div class="col-md-6">
                             <label for="amount" class="form-label">Amount</label>
                             <input type="number" name="amount" id="amount" class="form-control" placeholder="Amount"
@@ -121,14 +64,13 @@
                 <div class="col">
                     <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
                         class="scrollspy-example" tabindex="0">
-
                         <script>
-                            $(document).ready(function() {
+                            $(document).ready(function () {
                                 $.ajax({
                                     url: "{{route('dashboard.index')}}",
                                     method: "GET",
                                     dataType: "json",
-                                    success: function(data) {
+                                    success: function (data) {
                                         var tB = data.countIncome - data.countExpense;
                                         $("#totalIncome").text(data.countIncome);
                                         $("#totalExpense").text(data.countExpense);
@@ -144,7 +86,7 @@
                                                     <div class="row g-0">
                                                         <div class="col-md-2">
                                                             <div class="card-body">
-                                                                <img src="{{asset('assets/images/`+icon+`')}}" alt="Out"
+                                                                <img src="{{asset('assets/images/`+ icon + `')}}" alt="Out"
                                                                     style="width:50px; margin-top: 5px;">
                                                             </div>
                                                         </div>
@@ -152,15 +94,15 @@
                                                             <div class="card-body">
                                                                 <div class="container">
                                                                     <p class="card-text">
-                                                                        <b>`+category.category_name+`</b>
-                                                                        <br><small class="text-muted">&dollar; `+item.amount+` - `+item.transaction_date+`</small>
+                                                                        <b>`+ category.category_name + `</b>
+                                                                        <br><small class="text-muted">&dollar; `+ item.amount + ` - ` + item.transaction_date + `</small>
                                                                     </p>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2">
                                                             <div class="card-body">
-                                                                <a href="#" data-id="`+item.id+`" class="delete-confirm">
+                                                                <a href="#" data-id="`+ item.id + `" class="delete-confirm">
                                                                     <i class="fa fa-trash fa-lg mt-4 text-danger"></i>    
                                                                 </a>    
                                                             </div>
@@ -172,19 +114,19 @@
                                             $("#itemCard").append(card);
                                         });
 
-                                        $(".delete-confirm").on('click', function() {
+                                        $(".delete-confirm").on('click', function () {
                                             var typeId = $(this).data('id');
                                             $.ajax({
                                                 type: "POST",
-                                                url: '/dashboard/'+typeId,
-                                                data : {
+                                                url: '/dashboard/' + typeId,
+                                                data: {
                                                     "_token": "{{ csrf_token() }}",
                                                     "_method": "DELETE"
                                                 },
-                                                success: function(data) {
+                                                success: function (data) {
                                                     window.location.reload();
                                                 },
-                                                error: function(err) {
+                                                error: function (err) {
                                                     alert(err);
                                                 }
 
@@ -194,7 +136,6 @@
                                 });
                             });
                         </script>
-
                         <div id="itemCard"></div>
                     </div>
                 </div>
@@ -210,35 +151,8 @@
             <div class="card-body">
                 <h4 class="card-title">&dollar; <span id="totalExpense"></span></h4>
                 <canvas id="chartExpense"></canvas>
-                <script>
-                    $(document).ready(function() {
-                        const ctx2 = $('#chartExpense');
-                        
-                        const data = {
-                            labels: [
-                                'Red',
-                                'Blue',
-                                'Yellow'
-                            ],
-                            datasets: [{
-                                label: 'Total',
-                                data: [300, 50, 100],
-                                backgroundColor: [
-                                'rgb(255, 99, 132)',
-                                'rgb(54, 162, 235)',
-                                'rgb(255, 205, 86)'
-                                ],
-                                hoverOffset: 4
-                            }]
-                        };
-
-                        new Chart(ctx2, {
-                            type: 'doughnut',
-                            data: data,
-                        });
-                    });
-                </script>
             </div>
+            <div class="card-footer bg-danger"></div>
         </div>
     </div>
 </div>

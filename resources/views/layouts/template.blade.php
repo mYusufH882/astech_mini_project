@@ -20,6 +20,9 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js">
     </script>
+    <script src="{{asset('assets/js/chain_dropdown.js')}}"></script>
+    <script src="{{asset('assets/js/chart/chart_income.js')}}"></script>
+    <script src="{{asset('assets/js/chart/chart_expense.js')}}"></script>
 
     <style>
         .scrollspy-example {

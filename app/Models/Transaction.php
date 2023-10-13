@@ -44,8 +44,13 @@ class Transaction extends Model
         return $this->belongsTo(Category::class, 'id_category', 'id');
     }
 
-    public static function getTotal($type)
+    public static function getTransactions($type, $mode)
     {
-        return Transaction::where('id_type', $type)->sum('amount');
+        $trans = new Transaction();
+        if ($mode == "total") {
+            return $trans->where('id_type', $type)->sum('amount');
+        } else if ($mode == "chart") {
+            return $trans->with(['typeItem', 'categoryItem'])->where('id_type', $type)->get();
+        }
     }
 }

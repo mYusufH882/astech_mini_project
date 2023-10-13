@@ -22,8 +22,10 @@ class DashboardController extends Controller
 
             $data = [
                 'trans' => $trans,
-                'countIncome' => $transaction->getTotal(1),
-                'countExpense' => $transaction->getTotal(2),
+                'countIncome' => $transaction->getTransactions(1, 'total'),
+                'countExpense' => $transaction->getTransactions(2, 'total'),
+                'chartIn' => $transaction->getTransactions(1, 'chart'),
+                'chartEx' => $transaction->getTransactions(2, 'chart'),
             ];
 
             return response()->json($data);

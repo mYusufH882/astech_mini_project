@@ -20,7 +20,7 @@ Route::get('/', function () {
     $types = Type::get();
     $categories = Category::get();
 
-    return view('welcome', compact('types', 'categories'));
+    return view('dashboard', compact('types', 'categories'));
 });
 Route::resource('/dashboard', DashboardController::class);
 

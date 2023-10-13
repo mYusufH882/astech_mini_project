@@ -23,7 +23,11 @@
             </div>
             <div class="card-body">
                 <h4 class="text-center">Total Balance &dollar; <span id="totalBalance"></span></h4>
+                <p class="text-center">Try saying:
+                    Add Income for ₹100 in Category Salary for Monday <br> <span id="text"
+                        class="text-info text-sm"></span></p>
                 <hr>
+                <p id="result" class="text-center text-bold text-sm mb-3"></p>
 
                 <form action="{{route('dashboard.store')}}" class="form-group" method="POST">
                     @csrf
@@ -32,7 +36,7 @@
                         <div class="col-md-6">
                             <label for="type" class="form-label">Type</label>
                             <select name="type_id" id="type" class="form-control" aria-placeholder="Type">
-                                <option value="">Choose Type</option>
+                                <option value="0">Choose Type</option>
                                 @foreach ($types as $item)
                                 <option value="{{$item->id}}">{{$item->type_name}}</option>
                                 @endforeach
@@ -53,7 +57,7 @@
                         <div class="col-md-6">
                             <label for="transaction_date" class="form-label">Date</label>
                             <input type="date" name="transaction_date" id="transaction_date" class="form-control"
-                                value="{{date('Y-m-d')}}" required>
+                                required>
                         </div>
                     </div>
                     <div class="d-grid gap-2 mt-3">
@@ -83,5 +87,10 @@
             <div class="card-footer bg-danger"></div>
         </div>
     </div>
+</div>
+<div class="position-absolute bottom-0 end-0 rounded-circle m-5">
+    <button type="button" id="microphone" class="btn btn-success btn-lg" aria-expanded="false" aria-haspopup="true">
+        <i class="fa-solid fa-microphone"></i>
+    </button>
 </div>
 @endsection

@@ -2,7 +2,6 @@ $(document).ready(function () {
     const ctx2 = $('#chartExpense');
     const labels = [];
     const datas = [];
-    let colorCharts = JSON.parse(localStorage.getItem('chartColors')) || [];
 
     function getRandomColor() {
         const r = Math.floor(Math.random() * 256);
@@ -11,6 +10,8 @@ $(document).ready(function () {
 
         return `rgb(${r}, ${g}, ${b})`;
     }
+
+    let colorCharts = JSON.parse(localStorage.getItem('chartColors')) || [];
 
     function updateChart() {
         const data = {

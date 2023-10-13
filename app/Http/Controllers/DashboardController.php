@@ -33,7 +33,7 @@ class DashboardController extends Controller
 
         $types = Type::get();
 
-        return view('welcome', compact('types'));
+        return view('dashboard', compact('types'));
     }
 
     /**

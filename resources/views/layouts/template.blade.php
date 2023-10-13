@@ -22,6 +22,7 @@
     </script>
     <script src="{{asset('assets/js/app.js')}}"></script>
     <script src="{{asset('assets/js/chain_dropdown.js')}}"></script>
+    <script src="{{asset('assets/js/microphone.js')}}"></script>
     <script src="{{asset('assets/js/chart/chart_income.js')}}"></script>
     <script src="{{asset('assets/js/chart/chart_expense.js')}}"></script>
 
